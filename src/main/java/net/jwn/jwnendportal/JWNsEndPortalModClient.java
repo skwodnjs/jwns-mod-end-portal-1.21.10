@@ -1,11 +1,16 @@
 package net.jwn.jwnendportal;
 
+import net.jwn.jwnendportal.portal.MyPortalBlockEntity;
+import net.jwn.jwnendportal.register.ModBlockEntities;
+import net.minecraft.client.renderer.blockentity.TheEndPortalRenderer;
+import net.minecraft.world.level.block.entity.TheEndPortalBlockEntity;
 import net.neoforged.api.distmarker.Dist;
 import net.neoforged.bus.api.SubscribeEvent;
 import net.neoforged.fml.ModContainer;
 import net.neoforged.fml.common.EventBusSubscriber;
 import net.neoforged.fml.common.Mod;
 import net.neoforged.fml.event.lifecycle.FMLClientSetupEvent;
+import net.neoforged.neoforge.client.event.EntityRenderersEvent;
 import net.neoforged.neoforge.client.gui.ConfigurationScreen;
 import net.neoforged.neoforge.client.gui.IConfigScreenFactory;
 
@@ -24,5 +29,13 @@ public class JWNsEndPortalModClient {
     @SubscribeEvent
     static void onClientSetup(FMLClientSetupEvent event) {
 
+    }
+
+    @SubscribeEvent
+    public static void registerRenderers(EntityRenderersEvent.RegisterRenderers event) {
+        event.registerBlockEntityRenderer(
+                ModBlockEntities.CUSTOM_END_PORTAL_BLOCK_ENTITY.get(),
+                (context) -> new TheEndPortalRenderer()
+        );
     }
 }
