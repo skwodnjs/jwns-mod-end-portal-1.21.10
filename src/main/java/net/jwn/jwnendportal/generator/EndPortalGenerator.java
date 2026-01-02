@@ -39,58 +39,56 @@ public class EndPortalGenerator extends Item {
     @Override
     public InteractionResult useOn(UseOnContext context) {
         Level level = context.getLevel();
-        if (level instanceof ServerLevel serverLevel) {
+        Player player = context.getPlayer();
+        if (level instanceof ServerLevel serverLevel && player != null) {
             PlayerPortalPosSavedData portalData = PlayerPortalPosSavedData.get(serverLevel.getServer());
-            Player player = context.getPlayer();
-            if (player != null) {
-                AdvancementHolder adv = serverLevel.getServer().getAdvancements().get(ResourceLocation.fromNamespaceAndPath("minecraft", "end/enter_end_gateway"));
-                if (adv != null && !((ServerPlayer) player).getAdvancements().getOrStartProgress(adv).isDone()) {
-                    player.displayClientMessage(Component.translatable("message.jwnendportal.remote_gateway_to_open_portal"), false);
-                    return InteractionResult.SUCCESS;
-                }
+            AdvancementHolder adv = serverLevel.getServer().getAdvancements().get(ResourceLocation.fromNamespaceAndPath("minecraft", "end/enter_end_gateway"));
+            if (adv != null && !((ServerPlayer) player).getAdvancements().getOrStartProgress(adv).isDone()) {
+                player.displayClientMessage(Component.translatable("message.jwnendportal.remote_gateway_to_open_portal"), false);
+                return InteractionResult.SUCCESS;
+            }
 
+            UUID uuid = context.getPlayer().getUUID();
+            ServerLevel targetLevel;
 
-                UUID uuid = context.getPlayer().getUUID();
-                ServerLevel targetLevel;
-                if (serverLevel.dimension() == Level.OVERWORLD) {
-                    if (portalData.getOverworldPos(uuid) == null) {
-                        portalData.setOverworldPos(uuid, context.getClickedPos());
-                    } else {
-                        player.displayClientMessage(Component.translatable("message.jwnendportal.no_more_overworld"), false);
-                        return InteractionResult.SUCCESS;
-                    }
-                    targetLevel = serverLevel.getServer().getLevel(Level.END);
-                }
-                else if (serverLevel.dimension() == Level.END) {
-                    if (portalData.getEndPos(uuid) == null) {
-                        portalData.setEndPos(uuid, context.getClickedPos());
-                    } else {
-                        player.displayClientMessage(Component.translatable("message.jwnendportal.no_more_end"), false);
-                        return InteractionResult.SUCCESS;
-                    }
-                    targetLevel = serverLevel.getServer().getLevel(Level.OVERWORLD);
+            if (serverLevel.dimension() == Level.OVERWORLD) {
+                if (portalData.getOverworldPos(uuid) == null) {
+                    portalData.setOverworldPos(uuid, context.getClickedPos());
                 } else {
-                    targetLevel = null;
-                }
-
-                if (targetLevel == null) {
-                    player.displayClientMessage(Component.translatable("message.jwnendportal.cannot_place_nether"), false);
+                    player.displayClientMessage(Component.translatable("message.jwnendportal.no_more_overworld"), false);
                     return InteractionResult.SUCCESS;
                 }
-
-                serverLevel.setBlock(context.getClickedPos(), ModBlocks.CUSTOM_END_PORTAL.get().defaultBlockState(), 3);
-
-                if (serverLevel.getBlockEntity(context.getClickedPos()) instanceof  MyPortalBlockEntity blockEntity) {
-                    blockEntity.setOwner(uuid);
-                    blockEntity.setOwnerName(context.getPlayer().getPlainTextName());
+                targetLevel = serverLevel.getServer().getLevel(Level.END);
+            }
+            else if (serverLevel.dimension() == Level.END) {
+                if (portalData.getEndPos(uuid) == null) {
+                    portalData.setEndPos(uuid, context.getClickedPos());
+                } else {
+                    player.displayClientMessage(Component.translatable("message.jwnendportal.no_more_end"), false);
+                    return InteractionResult.SUCCESS;
                 }
+                targetLevel = serverLevel.getServer().getLevel(Level.OVERWORLD);
+            } else {
+                targetLevel = null;
+            }
 
-                if (!(player.isCreative())) {
-                    applyDamage(context.getItemInHand().getDamageValue() + 1,
-                            player,
-                            (item) -> player.onEquippedItemBroken(item, context.getHand().asEquipmentSlot()),
-                            context.getItemInHand());
-                }
+            if (targetLevel == null) {
+                player.displayClientMessage(Component.translatable("message.jwnendportal.cannot_place_nether"), false);
+                return InteractionResult.SUCCESS;
+            }
+
+            serverLevel.setBlock(context.getClickedPos(), ModBlocks.CUSTOM_END_PORTAL.get().defaultBlockState(), 3);
+
+            if (serverLevel.getBlockEntity(context.getClickedPos()) instanceof  MyPortalBlockEntity blockEntity) {
+                blockEntity.setOwner(uuid);
+                blockEntity.setOwnerName(context.getPlayer().getPlainTextName());
+            }
+
+            if (!(player.isCreative())) {
+                applyDamage(context.getItemInHand().getDamageValue() + 1,
+                        player,
+                        (item) -> player.onEquippedItemBroken(item, context.getHand().asEquipmentSlot()),
+                        context.getItemInHand());
             }
         }
 

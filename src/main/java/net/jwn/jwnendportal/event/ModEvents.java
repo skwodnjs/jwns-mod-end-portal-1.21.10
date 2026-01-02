@@ -30,7 +30,7 @@ public class ModEvents {
 
     @SubscribeEvent
     public static void breakCustomEndPortal(PlayerInteractEvent.LeftClickBlock event) {
-        if (event.getLevel() instanceof ServerLevel level) {
+        if (!event.getEntity().isCreative() && event.getLevel() instanceof ServerLevel level) {
             UUID uuid = event.getEntity().getUUID();
             if (level.getBlockEntity(event.getPos()) instanceof MyPortalBlockEntity entity
                     && event.getEntity().getMainHandItem().is(ModItems.END_PORTAL_GENERATOR)) {
