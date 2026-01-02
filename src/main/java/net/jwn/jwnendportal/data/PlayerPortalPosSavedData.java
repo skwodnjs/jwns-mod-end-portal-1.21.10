@@ -11,9 +11,7 @@ import net.minecraft.world.level.Level;
 import net.minecraft.world.level.saveddata.SavedData;
 import net.minecraft.world.level.saveddata.SavedDataType;
 
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 public class PlayerPortalPosSavedData extends SavedData {
     public static final SavedDataType<PlayerPortalPosSavedData> TYPE =
@@ -55,7 +53,7 @@ public class PlayerPortalPosSavedData extends SavedData {
         players.forEach((uuid, pos) -> {
             System.out.println("Player: " + pos.getName() + " (" + uuid + ")");
             System.out.println(" - Overworld: " + pos.getOverworldPos());
-            System.out.println(" - Ender: " + pos.getEnderPos());
+            System.out.println(" - Ender: " + pos.getEndPos());
         });
     }
 
@@ -87,9 +85,13 @@ public class PlayerPortalPosSavedData extends SavedData {
     public BlockPos getEndPos(UUID player) {
         PlayerPortalPos playerPortalPos = players.get(player);
         if (playerPortalPos != null) {
-            return playerPortalPos.getEnderPos();
+            return playerPortalPos.getEndPos();
         } else {
             return null;
         }
+    }
+
+    public Map<UUID, PlayerPortalPos> getAll() {
+        return Collections.unmodifiableMap(players);
     }
 }

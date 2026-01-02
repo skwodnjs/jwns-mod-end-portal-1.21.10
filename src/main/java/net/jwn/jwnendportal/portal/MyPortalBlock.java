@@ -61,6 +61,6 @@ public class MyPortalBlock extends EndPortalBlock {
 
     @Override
     protected VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return Block.box(0.0, 0.0, 0.0, 16.0, 8.0, 16.0);
+        return Block.box(0.0, 0.0, 0.0, 16.0, 3.0, 16.0);
     }
 }

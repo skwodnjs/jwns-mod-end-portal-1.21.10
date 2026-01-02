@@ -13,14 +13,14 @@ public class PlayerPortalPos extends SavedData {
     private final String name;
     private final UUID playerUUID;
     private BlockPos overworldPos = null;
-    private BlockPos enderPos = null;
+    private BlockPos endPos = null;
 
     public static final Codec<PlayerPortalPos> CODEC =
             RecordCodecBuilder.create(instance -> instance.group(
                     Codec.STRING.fieldOf("name").forGetter(PlayerPortalPos::getName),
                     UUIDUtil.CODEC.fieldOf("playerUUID").forGetter(PlayerPortalPos::getPlayerUUID),
                     BlockPos.CODEC.optionalFieldOf("overworldPos").forGetter(p -> Optional.ofNullable(p.getOverworldPos())),
-                    BlockPos.CODEC.optionalFieldOf("enderPos").forGetter(p -> Optional.ofNullable(p.getEnderPos()))
+                    BlockPos.CODEC.optionalFieldOf("enderPos").forGetter(p -> Optional.ofNullable(p.getEndPos()))
             ).apply(instance, (name, uuid, overworld, ender) -> {
                 PlayerPortalPos pos = new PlayerPortalPos(name, uuid);
                 overworld.ifPresent(pos::setOverworldPos);
@@ -36,7 +36,7 @@ public class PlayerPortalPos extends SavedData {
     // setter
 
     public void setEndPos(BlockPos enderPos) {
-        this.enderPos = enderPos;
+        this.endPos = enderPos;
     }
 
     public void setOverworldPos(BlockPos overworldPos) {
@@ -45,8 +45,8 @@ public class PlayerPortalPos extends SavedData {
 
     // getter
 
-    public BlockPos getEnderPos() {
-        return enderPos;
+    public BlockPos getEndPos() {
+        return endPos;
     }
 
     public BlockPos getOverworldPos() {
