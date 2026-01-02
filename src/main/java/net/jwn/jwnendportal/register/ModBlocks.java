@@ -2,6 +2,7 @@ package net.jwn.jwnendportal.register;
 
 import net.jwn.jwnendportal.JWNsEndPortalMod;
 import net.jwn.jwnendportal.portal.MyPortalBlock;
+import net.minecraft.world.level.block.SoundType;
 import net.minecraft.world.level.material.MapColor;
 import net.minecraft.world.level.material.PushReaction;
 import net.neoforged.bus.api.IEventBus;
@@ -14,10 +15,9 @@ public class ModBlocks {
     public static final DeferredBlock<MyPortalBlock> CUSTOM_END_PORTAL = BLOCKS.registerBlock("custom_end_portal",
             (properties) -> new MyPortalBlock(properties.mapColor(MapColor.COLOR_BLACK).noCollision()
                     .lightLevel((p_152692_) -> 15).strength(-1.0F, 3600000.0F)
-                    .noLootTable().pushReaction(PushReaction.BLOCK)));
+                    .noLootTable().pushReaction(PushReaction.BLOCK).sound(SoundType.GLASS)));
 
     public static void register(IEventBus eventBus) {
         BLOCKS.register(eventBus);
     }
-
 }

@@ -1,0 +1,6 @@
+{
+  "parent": "minecraft:item/handheld",
+  "textures": {
+    "layer0": "jwnendportal:item/end_portal_generator"
+  }
+}

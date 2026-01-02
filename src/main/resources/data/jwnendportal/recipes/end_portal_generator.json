@@ -1,0 +1,13 @@
+{
+  "type": "minecraft:crafting_shapeless",
+  "ingredients": [
+    { "item": "minecraft:obsidian" },
+    { "item": "minecraft:diamond" },
+    { "item": "minecraft:stick" },
+    { "item": "minecraft:ender_eye" }
+  ],
+  "result": {
+    "item": "jwnendportal:end_portal_generator",
+    "count": 1
+  }
+}

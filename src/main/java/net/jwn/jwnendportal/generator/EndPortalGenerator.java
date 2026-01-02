@@ -3,8 +3,11 @@ package net.jwn.jwnendportal.generator;
 import net.jwn.jwnendportal.data.PlayerPortalPosSavedData;
 import net.jwn.jwnendportal.portal.MyPortalBlockEntity;
 import net.jwn.jwnendportal.register.ModBlocks;
+import net.minecraft.advancements.Advancement;
+import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.CriteriaTriggers;
 import net.minecraft.network.chat.Component;
+import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
 import net.minecraft.server.level.ServerPlayer;
 import net.minecraft.world.InteractionHand;
@@ -40,27 +43,46 @@ public class EndPortalGenerator extends Item {
             PlayerPortalPosSavedData portalData = PlayerPortalPosSavedData.get(serverLevel.getServer());
             Player player = context.getPlayer();
             if (player != null) {
+                AdvancementHolder adv = serverLevel.getServer().getAdvancements().get(ResourceLocation.fromNamespaceAndPath("minecraft", "end/enter_end_gateway"));
+                if (adv != null && !((ServerPlayer) player).getAdvancements().getOrStartProgress(adv).isDone()) {
+                    player.displayClientMessage(Component.translatable("message.jwnendportal.remote_gateway_to_open_portal"), false);
+                    return InteractionResult.SUCCESS;
+                }
+
+
                 UUID uuid = context.getPlayer().getUUID();
+                ServerLevel targetLevel;
                 if (serverLevel.dimension() == Level.OVERWORLD) {
                     if (portalData.getOverworldPos(uuid) == null) {
                         portalData.setOverworldPos(uuid, context.getClickedPos());
                     } else {
-                        player.displayClientMessage(Component.translatable("오버월드에서는 더 이상 포탈을 설치할 수 없습니다. 기존의 포탈을 부수고 다시 시도해주세요."), false);
+                        player.displayClientMessage(Component.translatable("message.jwnendportal.no_more_overworld"), false);
                         return InteractionResult.SUCCESS;
                     }
+                    targetLevel = serverLevel.getServer().getLevel(Level.END);
                 }
                 else if (serverLevel.dimension() == Level.END) {
                     if (portalData.getEndPos(uuid) == null) {
                         portalData.setEndPos(uuid, context.getClickedPos());
                     } else {
-                        player.displayClientMessage(Component.translatable("엔드에서는 더 이상 포탈을 설치할 수 없습니다. 기존의 포탈을 부수고 다시 시도해주세요."), false);
+                        player.displayClientMessage(Component.translatable("message.jwnendportal.no_more_end"), false);
                         return InteractionResult.SUCCESS;
                     }
+                    targetLevel = serverLevel.getServer().getLevel(Level.OVERWORLD);
+                } else {
+                    targetLevel = null;
+                }
+
+                if (targetLevel == null) {
+                    player.displayClientMessage(Component.translatable("message.jwnendportal.cannot_place_nether"), false);
+                    return InteractionResult.SUCCESS;
                 }
 
                 serverLevel.setBlock(context.getClickedPos(), ModBlocks.CUSTOM_END_PORTAL.get().defaultBlockState(), 3);
+
                 if (serverLevel.getBlockEntity(context.getClickedPos()) instanceof  MyPortalBlockEntity blockEntity) {
                     blockEntity.setOwner(uuid);
+                    blockEntity.setOwnerName(context.getPlayer().getPlainTextName());
                 }
 
                 if (!(player.isCreative())) {

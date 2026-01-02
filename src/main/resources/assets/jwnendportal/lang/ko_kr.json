@@ -1,3 +1,9 @@
 {
-  "item.jwnendportal.end_portal_generator": "엔드 포탈 생성기"
+  "item.jwnendportal.end_portal_generator": "엔드 포탈 생성기",
+
+  "message.jwnendportal.destroy_only_own_portal": "본인의 포탈만 파괴할 수 있습니다. (소유자: %s)",
+  "message.jwnendportal.remote_gateway_to_open_portal": "'머나먼 휴양지' 발전과제를 완료해야 포탈을 열 수 있습니다.",
+  "message.jwnendportal.no_more_overworld": "오버월드에서는 더 이상 포탈을 설치할 수 없습니다. 기존의 포탈을 부수고 다시 시도해주세요.",
+  "message.jwnendportal.no_more_end": "엔드에서는 더 이상 포탈을 설치할 수 없습니다. 기존의 포탈을 부수고 다시 시도해주세요.",
+  "message.jwnendportal.cannot_place_nether": "여기에서는 포탈을 설치할 수 없습니다."
 }

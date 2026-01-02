@@ -1,3 +1,9 @@
 {
-  "item.jwnendportal.end_portal_generator": "End Portal Generator"
+  "item.jwnendportal.end_portal_generator": "End Portal Generator",
+
+  "message.jwnendportal.destroy_only_own_portal": "You can only destroy your own portal. (Portal owner: %s)",
+  "message.jwnendportal.remote_gateway_to_open_portal": "You must complete the 'Remote Getaway' advancement to open the portal.",
+  "message.jwnendportal.no_more_overworld": "You can no longer place a portal in the Overworld. Please destroy your existing portal and try again.",
+  "message.jwnendportal.no_more_end": "You can no longer place a portal in the End. Please destroy your existing portal and try again.",
+  "message.jwnendportal.cannot_place_nether": "You cannot place a portal here."
 }
