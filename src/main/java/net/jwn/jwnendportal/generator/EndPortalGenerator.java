@@ -6,6 +6,7 @@ import net.jwn.jwnendportal.register.ModBlocks;
 import net.minecraft.advancements.Advancement;
 import net.minecraft.advancements.AdvancementHolder;
 import net.minecraft.advancements.CriteriaTriggers;
+import net.minecraft.core.Holder;
 import net.minecraft.network.chat.Component;
 import net.minecraft.resources.ResourceLocation;
 import net.minecraft.server.level.ServerLevel;
@@ -17,23 +18,18 @@ import net.minecraft.world.entity.player.Player;
 import net.minecraft.world.item.Item;
 import net.minecraft.world.item.ItemStack;
 import net.minecraft.world.item.context.UseOnContext;
+import net.minecraft.world.item.enchantment.Enchantment;
+import net.minecraft.world.item.enchantment.EnchantmentInstance;
 import net.minecraft.world.level.Level;
 
 import javax.annotation.Nullable;
+import java.util.List;
 import java.util.UUID;
 import java.util.function.Consumer;
 
 public class EndPortalGenerator extends Item {
     public EndPortalGenerator(Properties properties) {
         super(properties);
-    }
-
-    @Override
-    public InteractionResult use(Level level, Player player, InteractionHand hand) {
-        if (level instanceof ServerLevel serverLevel) {
-            PlayerPortalPosSavedData.get(serverLevel.getServer()).printAll();
-        }
-        return InteractionResult.SUCCESS;
     }
 
     @Override

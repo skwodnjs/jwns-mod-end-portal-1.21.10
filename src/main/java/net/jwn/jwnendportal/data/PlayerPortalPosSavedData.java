@@ -48,15 +48,6 @@ public class PlayerPortalPosSavedData extends SavedData {
         setDirty();
     }
 
-    public void printAll() {
-        System.out.println("=== Player Portal Positions ===");
-        players.forEach((uuid, pos) -> {
-            System.out.println("Player: " + pos.getName() + " (" + uuid + ")");
-            System.out.println(" - Overworld: " + pos.getOverworldPos());
-            System.out.println(" - Ender: " + pos.getEndPos());
-        });
-    }
-
     public void setOverworldPos(UUID player, BlockPos pos) {
         PlayerPortalPos playerPortalPos = players.get(player);
         if (playerPortalPos != null) {

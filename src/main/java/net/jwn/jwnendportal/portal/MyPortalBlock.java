@@ -23,6 +23,18 @@ import java.util.Set;
 import java.util.UUID;
 
 public class MyPortalBlock extends EndPortalBlock {
+    private static final VoxelShape SHAPE = Block.box(0.0, 0.0, 0.0, 16.0, 3.0, 16.0);
+
+    @Override
+    protected VoxelShape getShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        return SHAPE;
+    }
+
+    @Override
+    protected VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
+        return Block.box(0.0, 0.0, 0.0, 16.0, 3.0, 16.0);
+    }
+
     public MyPortalBlock(Properties properties) {
         super(properties);
     }
@@ -57,10 +69,5 @@ public class MyPortalBlock extends EndPortalBlock {
         if (entity.canUsePortal(false)) {
             entity.setAsInsidePortal(this, pos);
         }
-    }
-
-    @Override
-    protected VoxelShape getCollisionShape(BlockState state, BlockGetter level, BlockPos pos, CollisionContext context) {
-        return Block.box(0.0, 0.0, 0.0, 16.0, 3.0, 16.0);
     }
 }

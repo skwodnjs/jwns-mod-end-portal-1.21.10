@@ -1,25 +1,43 @@
+# JWN's End Portal Generator Mod
 
-Installation information
-=======
+## 개요
 
-This template repository can be directly cloned to get you started with a new
-mod. Simply create a new repository cloned from this one, by following the
-instructions provided by [GitHub](https://docs.github.com/en/repositories/creating-and-managing-repositories/creating-a-repository-from-a-template).
+엔드 포탈을 생성할 수 있는 '엔드 포탈 생성기'를 추가합니다.
 
-Once you have your clone, simply open the repository in the IDE of your choice. The usual recommendation for an IDE is either IntelliJ IDEA or Eclipse.
+## GitHub Link
 
-If at any point you are missing libraries in your IDE, or you've run into problems you can
-run `gradlew --refresh-dependencies` to refresh the local cache. `gradlew clean` to reset everything 
-{this does not affect your code} and then start the process again.
+<a href="https://github.com/skwodnjs/jwns-mod-end-portal-1.21.10" target="_blank">https://github.com/skwodnjs/jwns-mod-end-portal-1.21.10</a>
 
-Mapping Names:
-============
-By default, the MDK is configured to use the official mapping names from Mojang for methods and fields 
-in the Minecraft codebase. These names are covered by a specific license. All modders should be aware of this
-license. For the latest license text, refer to the mapping file itself, or the reference copy here:
-https://github.com/NeoForged/NeoForm/blob/main/Mojang.md
+## 버전 정보
 
-Additional Resources: 
-==========
-Community Documentation: https://docs.neoforged.net/  
-NeoForged Discord: https://discord.neoforged.net/
+- NeoForge 전용
+- 마인크래프트 버전: 1.21.10 (NeoForge 버전 21.10.63 이상)
+
+## 상세
+
+<small>* 2026. 01. 08. Last Updated</small>
+
+### End Portal Generator
+
+엔드 포탈 생성기는 흑요석, 다이아몬드, 엔더의 눈, 막대기를 조합하여 얻을 수 있습니다. 총 내구도는 2이고, '내구성' 인첸트의 영향을 받지 않습니다.
+
+<img src="20260108_001.png" alt="20260108_001.png">
+
+엔드 포탈 생성기를 사용하여 엔드 포탈을 생성할 수 있습니다. 엔드 포탈을 생성할 블록에 대고 우클릭하면 해당 블록이 엔드 포탈로 바뀝니다.
+
+### Custom End Portal
+
+각 플레이어마다 최대 1개의 포탈 쌍을 생성할 수 있습니다.
+오버월드에 포탈을 생성한 다음, 엔더로 이동하여 포탈을 생성하면 하나의 포탈 쌍이 생성됩니다.
+하나의 포탈 쌍을 생성한 이후에는, 해당 차원에 있는 포탈을 부수지 않는 이상 다른 포탈을 추가로 생성할 수 없습니다.
+
+생성한 엔드 포탈은 오직 "포탈을 생성한 사람"이 "엔드 포탈 생성기를 들고 좌클릭"을 해야 부술 수 있습니다.
+완전한 포탈 쌍이 생성되지 않아 반대쪽 포탈이 존재하지 않을 경우에는 포탈이 작동하지 않습니다.
+
+생성한 포탈은 다른 플레이어뿐만 아니라 몹, 아이템 등의 엔티티도 사용할 수 있습니다.
+
+## 버전 기록
+
+### 0.0.1
+
+- 기본 기능 구현 완료
